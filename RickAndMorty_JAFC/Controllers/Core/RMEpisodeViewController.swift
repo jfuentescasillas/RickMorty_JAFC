@@ -16,6 +16,5 @@ final class RMEpisodeViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemGray2
-        // title = "Episodes List"
     }
 }

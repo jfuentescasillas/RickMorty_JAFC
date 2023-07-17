@@ -160,8 +160,8 @@
 		E49604732A644903008226BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E49604792A6449EC008226BA /* RMLocation.swift */,
 				E496047B2A644A01008226BA /* RMCharacter.swift */,
+				E49604792A6449EC008226BA /* RMLocation.swift */,
 				E496047D2A644A0E008226BA /* RMEpisode.swift */,
 			);
 			path = Models;

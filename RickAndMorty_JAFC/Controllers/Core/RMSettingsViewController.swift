@@ -16,6 +16,5 @@ final class RMSettingsViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemOrange
-        // title = "App Settings"
     }
 }
