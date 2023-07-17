@@ -12,7 +12,7 @@ import Foundation
 /// Unique API enpoint
 @frozen enum RMEndpoint: String {
     /// Endpoint to get character's info
-    case chacacter
+    case character
     
     /// Endpoint to get location's info
     case location
