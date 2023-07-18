@@ -9,20 +9,6 @@
 import Foundation
 
 
-// MARK: - RMCharacter
-struct RMCharacter: Codable {
-    let info: RMCharacterInfo?
-    let results: [RMCharacterResult]?
-}
-
-
-// MARK: - Info
-struct RMCharacterInfo: Codable {
-    let count, pages: Int?
-    let next, prev: String?
-}
-
-
 // MARK: - Result
 struct RMCharacterResult: Codable {
     let id: Int
@@ -31,7 +17,7 @@ struct RMCharacterResult: Codable {
     let species, type: String?
     let gender: RMCharacterGender?
     let origin, location: RMCharacterLocation?
-    let image: String?
+    let image: String
     let episode: [String]?
     let url: String?
     let created: String?
@@ -57,4 +43,14 @@ enum RMCharacterStatus: String, Codable {
     case alive     = "Alive"
     case dead      = "Dead"
     case `unknown` = "unknown"
+    
+    var statusText: String {
+        switch self {
+        case .alive, .dead:
+            return rawValue
+            
+        case .unknown:
+            return "Unknown"
+        }
+    }
 }

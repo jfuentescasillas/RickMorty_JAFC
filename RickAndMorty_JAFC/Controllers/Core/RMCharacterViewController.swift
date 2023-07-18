@@ -11,21 +11,28 @@ import UIKit
 
 /// Controller to show and search for Characters
 final class RMCharacterViewController: UIViewController {
+    // MARK: - Properties
+    private let charsListView = RMCharsListView()
     
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        configView()
+    }
+    
+    
+    // MARK: - Private Methods
+    private func configView() {
+        view.addSubview(charsListView)
+        view.backgroundColor = .systemGray4
         
-        let request = RMRequest(endpoint: .character,
-                                queryParams: [
-                                    URLQueryItem(name: "name", value: "rick"),
-                                    URLQueryItem(name: "status", value: "alive")
-                                ])
-        print("Request: \(String(describing: request.url))")
-        
-        RMService.shared.execute(request, expecting: RMCharacterResult.self) { result in
-            
-        }
+        NSLayoutConstraint.activate([
+            charsListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            charsListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            charsListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            charsListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
 }
