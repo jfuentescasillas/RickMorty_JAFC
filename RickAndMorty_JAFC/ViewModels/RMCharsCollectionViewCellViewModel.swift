@@ -9,9 +9,15 @@
 import Foundation
 
 
-final class RMCharsCollectionViewCellViewModel {
+final class RMCharsCollectionViewCellViewModel: Hashable, Equatable {
     // MARK: - Properties
+    // MARK: Public Properties
     public let charName: String
+    public var charStatusTxt: String {
+        return "Status: \(charStatus.statusText)"
+    }
+    
+    // MARK: Private Properties
     private let charStatus: RMCharacterStatus
     private let charImgURL: URL?
     
@@ -23,12 +29,6 @@ final class RMCharsCollectionViewCellViewModel {
         self.charName = charName
         self.charStatus = charStatus
         self.charImgURL = charImgURL
-    }
-    
-    
-    // MARK: - Other Properties
-    public var charStatusTxt: String {
-        return "Status: \(charStatus.statusText)"
     }
     
     
@@ -52,5 +52,18 @@ final class RMCharsCollectionViewCellViewModel {
         }
         
         task.resume()
+    }
+    
+    
+    // MARK: - Hashable
+    static func == (lhs: RMCharsCollectionViewCellViewModel, rhs: RMCharsCollectionViewCellViewModel) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(charImgURL)
+        hasher.combine(charName)
+        hasher.combine(charStatus)
     }
 }

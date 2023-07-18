@@ -12,9 +12,10 @@ import UIKit
 /// Single Character's cell
 class RMCharCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
+    // MARK: Public Properties
     public static let cellIdentifier = "RMCharCollectionViewCell"
     
-    // Private Properties
+    // MARK: Private Properties
     private let imageView: UIImageView = {
         let imgView = UIImageView()
         imgView.translatesAutoresizingMaskIntoConstraints = false

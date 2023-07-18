@@ -12,6 +12,7 @@ import UIKit
 /// Controller to show and search for Characters
 final class RMCharacterViewController: UIViewController {
     // MARK: - Properties
+    // MARK: Private Properties
     private let charsListView = RMCharsListView()
     
     
@@ -25,6 +26,8 @@ final class RMCharacterViewController: UIViewController {
     
     // MARK: - Private Methods
     private func configView() {
+        charsListView.delegate = self
+        
         view.addSubview(charsListView)
         view.backgroundColor = .systemGray4
         
@@ -34,5 +37,18 @@ final class RMCharacterViewController: UIViewController {
             charsListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             charsListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+
+// MARK: - Extension. RMCharsListViewDelegate
+extension RMCharacterViewController: RMCharsListViewDelegate {
+    func rmCharListView(_ charListView: RMCharsListView, didSelectChar character: RMCharacterResult) {
+        // Open CharDetailsViewController
+        let viewModel = RMCharDetailsViewViewModel(character: character)
+        let detailVC = RMCharDetailsViewController(viewModel: viewModel)
+        detailVC.navigationItem.largeTitleDisplayMode = .never
+        
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }

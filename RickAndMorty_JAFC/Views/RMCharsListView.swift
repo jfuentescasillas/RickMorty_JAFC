@@ -9,9 +9,20 @@
 import UIKit
 
 
+// MARK: - Protocols
+protocol RMCharsListViewDelegate: AnyObject {
+    func rmCharListView(_ charListView: RMCharsListView,
+                        didSelectChar character: RMCharacterResult)
+}
+
+
 /// View that shows the list of characters and the activity indicator (spinning loader)
 final class RMCharsListView: UIView {
-    // MARK: - Private Properties
+    // MARK: - Properties
+    // MARK: Public Properties
+    public weak var delegate: RMCharsListViewDelegate?
+    
+    // MARK: Private Properties
     private let viewModel = RMCharsListViewViewModel()
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -22,9 +33,13 @@ final class RMCharsListView: UIView {
     }()
     
     private let collectionView: UICollectionView = {
+        let genericPadding: CGFloat = 10
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 5,
+                                           left: genericPadding,
+                                           bottom: genericPadding,
+                                           right: genericPadding)
         
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: layout)
@@ -33,6 +48,9 @@ final class RMCharsListView: UIView {
         collectionView.alpha = 0
         collectionView.register(RMCharCollectionViewCell.self,
                                 forCellWithReuseIdentifier: RMCharCollectionViewCell.cellIdentifier)
+        collectionView.register(RMFooterLoadingCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier)
         
         return collectionView
     }()
@@ -45,7 +63,7 @@ final class RMCharsListView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         addSubviews(collectionView, spinner)
         
-        addAllConstraints()
+        configConstraints()
         
         spinner.startAnimating()
         
@@ -61,7 +79,7 @@ final class RMCharsListView: UIView {
     
     
     // MARK: - Private Methods
-    private func addAllConstraints() {
+    private func configConstraints() {
         let squarePadding: CGFloat = 100
         
         NSLayoutConstraint.activate([
@@ -80,12 +98,7 @@ final class RMCharsListView: UIView {
     
     private func setupCollectionView() {
         collectionView.dataSource = viewModel
-        collectionView.delegate = viewModel
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
-            
-        })
-    }
+        collectionView.delegate = viewModel    }
 }
 
 
@@ -103,5 +116,19 @@ extension RMCharsListView: RMCharsListViewViewModelDelegate {
             
             self.collectionView.alpha = 1
         }
+    }
+    
+    
+    func didLoadMoreChars(newIndexPaths: [IndexPath]) {
+        collectionView.performBatchUpdates { [weak self] in
+            guard let self else { return }
+            
+            self.collectionView.insertItems(at: newIndexPaths)
+        }
+    }
+    
+    
+    func didSelectChar(_ character: RMCharacterResult) {
+        delegate?.rmCharListView(self, didSelectChar: character)
     }
 }
