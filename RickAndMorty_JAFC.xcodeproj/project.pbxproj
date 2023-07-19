@@ -230,9 +230,9 @@
 			isa = PBXGroup;
 			children = (
 				E4357C0E2A655CF200BD89DA /* RMCharsListView.swift */,
-				E4357C1A2A669B3C00BD89DA /* RMCharDetailsView.swift */,
 				E4357C132A65682500BD89DA /* RMCharCollectionViewCell.swift */,
 				E4357C1E2A66A89C00BD89DA /* RMFooterLoadingCollectionReusableView.swift */,
+				E4357C1A2A669B3C00BD89DA /* RMCharDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

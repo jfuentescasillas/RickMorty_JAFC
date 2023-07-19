@@ -30,7 +30,7 @@ final class RMImageLoaderManager {
         let key = url.absoluteString as NSString
         
         if let data = imgCache.object(forKey: key) {
-            print("Image is cached already with key: \(key)")
+            // print("Image is cached already with key: \(key)")
             completion(.success(data as Data))
             
             return

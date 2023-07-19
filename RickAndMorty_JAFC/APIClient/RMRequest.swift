@@ -103,7 +103,7 @@ final class RMRequest {
             
             if !components.isEmpty {
                 let endpointString = components[0]  // Endpoint
-                var pathComponents: [String] = []
+                var pathComponents = [String]()
                
                 if components.count > 1 {
                     pathComponents = components
@@ -140,6 +140,7 @@ final class RMRequest {
             }
         }
 
+        // If all fails return nil
         return nil
     }
 }

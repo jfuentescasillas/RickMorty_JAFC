@@ -19,7 +19,7 @@ struct RMCharacterResult: Codable {
     let origin, location: RMCharacterLocation?
     let image: String
     let episode: [String]?
-    let url: String?
+    let url: String
     let created: String?
 }
 

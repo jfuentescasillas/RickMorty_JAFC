@@ -21,6 +21,7 @@ final class RMCharacterViewController: UIViewController {
         super.viewDidLoad()
         
         configView()
+        configConstraints()
     }
     
     
@@ -30,7 +31,10 @@ final class RMCharacterViewController: UIViewController {
         
         view.addSubview(charsListView)
         view.backgroundColor = .systemGray4
-        
+    }
+    
+    
+    private func configConstraints() {
         NSLayoutConstraint.activate([
             charsListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             charsListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
