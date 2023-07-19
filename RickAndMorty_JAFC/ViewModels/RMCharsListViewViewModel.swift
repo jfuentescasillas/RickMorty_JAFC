@@ -33,16 +33,20 @@ final class RMCharsListViewViewModel: NSObject {
     private var isLoadingMoreChars: Bool = false  // Used in Pagination
     private var charsList: [RMCharacterResult] = [] {
         didSet {
-            for character in charsList {
-                let viewModel = RMCharsCollectionViewCellViewModel(
+            let newViewModels = charsList.map { character in
+                let newModel = RMCharsCollectionViewCellViewModel(
                     charName: character.name,
                     charStatus: character.status ?? .unknown,
                     charImgURL: URL(string: character.image)
                 )
-                if !cellViewModels.contains(viewModel) {
-                    cellViewModels.append(viewModel)
-                }
+                
+                return newModel
             }
+            
+            let existingViewModels = cellViewModels
+            let uniqueViewModels   = newViewModels.filter { !existingViewModels.contains($0) }
+            
+            cellViewModels.append(contentsOf: uniqueViewModels)
         }
     }
         
@@ -98,9 +102,9 @@ final class RMCharsListViewViewModel: NSObject {
                 let newCount = moreResults.count
                 let total = originalCount + newCount
                 let startingIdx = total - newCount
-                let idxPathToAdd: [IndexPath] = Array(startingIdx..<(startingIdx+newCount)).compactMap({
+                let idxPathToAdd: [IndexPath] = Array(startingIdx..<(startingIdx+newCount)).compactMap {
                     return IndexPath(row: $0, section: 0)
-                })
+                }
                 
                 self.charsList.append(contentsOf: moreResults)
                 
@@ -207,10 +211,10 @@ extension RMCharsListViewViewModel: UIScrollViewDelegate {
             
             let offset                     = scrollView.contentOffset.y  // y coordinate (up and down)
             let totalContentHeight         = scrollView.contentSize.height  // The entire scrollview, if there are 5,000 characters, it'll be very tall
-            let totalScrollViewFixedHEight = scrollView.frame.size.height  // Screen's height
+            let totalScrollViewFixedHEight = scrollView.frame.size.height  // Screen's height, usually a fixed (the same) value.
             
             if offset >= (totalContentHeight - totalScrollViewFixedHEight - 110) {
-                print("Fetch more characters")
+                // print("Fetch more characters")
                 self.fetchMoreChars(url: url)
             }
             
