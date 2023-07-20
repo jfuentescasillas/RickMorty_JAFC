@@ -13,14 +13,14 @@ import Foundation
 struct RMCharacterResult: Codable {
     let id: Int
     let name: String
-    let status: RMCharacterStatus?
-    let species, type: String?
-    let gender: RMCharacterGender?
-    let origin, location: RMCharacterLocation?
+    let status: RMCharacterStatus
+    let species, type: String
+    let gender: RMCharacterGender
+    let origin, location: RMCharacterLocation
     let image: String
-    let episode: [String]?
+    let episode: [String]
     let url: String
-    let created: String?
+    let created: String
 }
 
 
@@ -34,8 +34,8 @@ enum RMCharacterGender: String, Codable {
 
 // MARK: - Location
 struct RMCharacterLocation: Codable {
-    let name: String?
-    let url: String?
+    let name: String
+    let url: String
 }
 
 

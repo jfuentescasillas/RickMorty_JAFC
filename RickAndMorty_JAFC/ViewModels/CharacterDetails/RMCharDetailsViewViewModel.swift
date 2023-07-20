@@ -11,10 +11,10 @@ import UIKit
 
 final class RMCharDetailsViewViewModel {
     // MARK: - Enums
-    enum SectionType: CaseIterable {
-        case photo
-        case information
-        case episodes
+    enum SectionType {
+        case photo(viewModel: RMCharPhotoCollectionViewCellViewModel)
+        case information(viewModels: [RMCharInfoCollectionViewCellViewModel])
+        case episodes(viewModels: [RMCharEpisodesCollectionViewCellViewModel])
     }
     
     
@@ -26,7 +26,7 @@ final class RMCharDetailsViewViewModel {
     }
     
     // MARK: Public Properties
-    public let sections = SectionType.allCases
+    public var sections = [SectionType]()
     public var title: String {
         character.name.uppercased()
     }
@@ -34,6 +34,29 @@ final class RMCharDetailsViewViewModel {
     // MARK: - Inits
     init(character: RMCharacterResult) {
         self.character = character
+        
+        configSections()
+    }
+    
+    
+    // MARK: - Private Methods
+    private func configSections() {
+        sections = [
+            .photo(viewModel: .init(imgURL: URL(string: character.image))),
+            .information(viewModels: [
+                .init(charType: .status, value: character.status.statusText),
+                .init(charType: .type, value: character.type),
+                .init(charType: .gender, value: character.gender.rawValue),
+                .init(charType: .species, value: character.species),
+                .init(charType: .origin, value: character.origin.name),
+                .init(charType: .location, value: character.location.name),
+                .init(charType: .created, value: character.created),
+                .init(charType: .episodeCount, value: "\(character.episode.count)")
+            ]),
+            .episodes(viewModels: character.episode.compactMap {
+                return RMCharEpisodesCollectionViewCellViewModel(episodeDataURL: URL(string: $0))
+            })
+        ]
     }
     
     
@@ -42,7 +65,7 @@ final class RMCharDetailsViewViewModel {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.5)
+                heightDimension: .fractionalHeight(1.0)
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0,
@@ -51,7 +74,7 @@ final class RMCharDetailsViewViewModel {
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.75)
+                heightDimension: .fractionalHeight(0.7)
             ),
             subitems: [item]
         )
@@ -67,7 +90,7 @@ final class RMCharDetailsViewViewModel {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(0.5),
-                heightDimension: .fractionalHeight(0.5)
+                heightDimension: .fractionalHeight(1)
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(top: padding, leading: padding,
@@ -76,7 +99,7 @@ final class RMCharDetailsViewViewModel {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(75)
+                heightDimension: .absolute(150)
             ),
             subitems: [item]
         )

@@ -36,7 +36,7 @@ final class RMCharsListViewViewModel: NSObject {
             let newViewModels = charsList.map { character in
                 let newModel = RMCharsCollectionViewCellViewModel(
                     charName: character.name,
-                    charStatus: character.status ?? .unknown,
+                    charStatus: character.status,
                     charImgURL: URL(string: character.image)
                 )
                 

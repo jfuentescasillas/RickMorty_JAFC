@@ -34,10 +34,7 @@ final class RMCharDetailsView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemPurple
         
-        let collectionView = createCollectionView()
-        self.collectionView = collectionView
-        addSubviews(collectionView, spinner)
-        
+        configCollectionView()
         configConstraints()
     }
     
@@ -48,13 +45,25 @@ final class RMCharDetailsView: UIView {
     
     
     // MARK: - Private Methods
+    private func configCollectionView() {
+        let collectionView = createCollectionView()
+        self.collectionView = collectionView
+        addSubviews(collectionView, spinner)
+    }
+    
+    
     private func createCollectionView() -> UICollectionView {
         let layout = UICollectionViewCompositionalLayout { sectionIdx, _ in
             return self.createSection(for: sectionIdx)
         }
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        collectionView.translatesAutoresizingMaskIntoConstraints = false  // <<<<<<------ When this is added, the view Shows a black screen
+        collectionView.register(RMCharPhotoCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RMCharPhotoCollectionViewCell.cellIdentifier)
+        collectionView.register(RMCharInfoCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RMCharInfoCollectionViewCell.cellIdentifier)
+        collectionView.register(RMCharEpisodesCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RMCharEpisodesCollectionViewCell.cellIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         return collectionView
     }
