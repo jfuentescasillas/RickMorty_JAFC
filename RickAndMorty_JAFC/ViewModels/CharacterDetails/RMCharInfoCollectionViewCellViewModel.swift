@@ -34,32 +34,32 @@ final class RMCharInfoCollectionViewCellViewModel {
             case .origin:
                 return .systemOrange
             case .created:
-                return .systemPink
+                return .systemGray
             case .location:
                 return .systemMint
             case .episodeCount:
-                return .systemYellow
+                return .systemBrown
             }
         }
         
         var iconImg: UIImage? {
             switch self {
             case .status:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "bell")
             case .gender:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "figure.dress.line.vertical.figure")
             case .type:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "person.fill.questionmark")
             case .species:
                 return UIImage(systemName: "person")
             case .origin:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "globe")
             case .created:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "calendar.badge.clock")
             case .location:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "mappin.circle")
             case .episodeCount:
-                return UIImage(systemName: "person")
+                return UIImage(systemName: "person.text.rectangle.fill")
             }
         }
         

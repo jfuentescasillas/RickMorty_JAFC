@@ -27,6 +27,10 @@ final class RMCharDetailsViewViewModel {
     
     // MARK: Public Properties
     public var sections = [SectionType]()
+    public var episodes: [String] {
+        character.episode
+    }
+    
     public var title: String {
         character.name.uppercased()
     }
@@ -46,7 +50,7 @@ final class RMCharDetailsViewViewModel {
             .information(viewModels: [
                 .init(charType: .status, value: character.status.statusText),
                 .init(charType: .type, value: character.type),
-                .init(charType: .gender, value: character.gender.rawValue),
+                .init(charType: .gender, value: character.gender.statusText),
                 .init(charType: .species, value: character.species),
                 .init(charType: .origin, value: character.origin.name),
                 .init(charType: .location, value: character.location.name),

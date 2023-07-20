@@ -54,7 +54,7 @@ final class RMCharDetailsViewController: UIViewController {
     
     private func configNavigItem() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .action,
+            barButtonSystemItem: .add,
             target: self,
             action: #selector(didTapShare)
         )
@@ -144,5 +144,19 @@ extension RMCharDetailsViewController: UICollectionViewDataSource {
 
 // MARK: - Extension. UICollectionViewDelegate
 extension RMCharDetailsViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let sectionType = viewModel.sections[indexPath.section]
+        
+        switch sectionType {
+        case .photo, .information:
+            break
+            
+        case .episodes:
+            let episodes = viewModel.episodes
+            let episodeSelected = episodes[indexPath.row]
+            let vc = RMEpisodeDetailsViewController(url: URL(string: episodeSelected))
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }

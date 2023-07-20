@@ -28,7 +28,17 @@ enum RMCharacterGender: String, Codable {
     case female     = "Female"
     case male       = "Male"
     case genderless = "Genderless"
-    case unknown    = "unknown"
+    case `unknown`  = "unknown"
+    
+    var statusText: String {
+        switch self {
+        case .unknown:
+            return "Unknown"
+            
+        default:
+            return rawValue
+        }
+    }
 }
 
 

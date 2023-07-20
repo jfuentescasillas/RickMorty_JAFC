@@ -10,7 +10,7 @@ import Foundation
 
 
 /// Unique API enpoint
-@frozen enum RMEndpoint: String {
+@frozen enum RMEndpoint: String, Hashable, CaseIterable {
     /// Endpoint to get character's info
     case character
     

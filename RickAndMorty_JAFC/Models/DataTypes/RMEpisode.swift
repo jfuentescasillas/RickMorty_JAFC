@@ -10,22 +10,16 @@ import Foundation
 
 
 // MARK: - RMEpisode
-struct RMEpisode: Codable {
-    let info: RMEpisodeInfo?
-    let results: [RMEpisodeResult]?
-}
-
-
-// MARK: - Info
-struct RMEpisodeInfo: Codable {
-    let count, pages: Int?
-    let next, prev: String?
-}
-
-
-// MARK: - Result
-struct RMEpisodeResult: Codable {
+struct RMEpisode: Codable, RMEpisodeDataRender {
     let id: Int
+    let name: String
+    let air_date: String
+    let episode: String
+    let characters: [String]
+    let url: String
+    let created: String
+    
+    /* let id: Int
     let name: String
     let airDate, episode: String?
     let characters: [String]?
@@ -37,5 +31,5 @@ struct RMEpisodeResult: Codable {
         case id, name
         case airDate = "air_date"
         case episode, characters, url, created
-    }
+    } */
 }
