@@ -47,6 +47,33 @@ final class RMCharsListViewViewModel: NSObject {
             let uniqueViewModels   = newViewModels.filter { !existingViewModels.contains($0) }
             
             cellViewModels.append(contentsOf: uniqueViewModels)
+            
+            // Uncomment to see behavior (it is related to the Hashable and Equatable in RMCharsCollectionViewCellViewModel
+            /* print("newViewModels: \(newViewModels)")
+            print("newViewModels counter: \(newViewModels.count)\n")
+            
+            print("cellViewModels before filter: \(cellViewModels)")
+            print("cellViewModels before filter counter: \(cellViewModels.count)\n")
+            
+            let existingViewModels = cellViewModels
+            print("ExistingViewModels: \(existingViewModels)")
+            print("ExistingViewModels counter: \(existingViewModels.count)\n")
+            
+            let uniqueViewModels   = newViewModels.filter { !existingViewModels.contains($0) }
+            print("uniqueViewModels: \(uniqueViewModels)")
+            print("uniqueViewModels counter: \(uniqueViewModels.count)\n")
+            
+            cellViewModels.append(contentsOf: uniqueViewModels)
+            print("cellViewModels after filter: \(cellViewModels)")
+            print("cellViewModels after filter counter: \(cellViewModels.count)\n")
+            
+            print("Summary:")
+            print("newViewModels counter: \(newViewModels.count)")
+            print("cellViewModels before filter counter: \(cellViewModels.count)")
+            print("ExistingViewModels counter: \(existingViewModels.count)")
+            print("uniqueViewModels counter: \(uniqueViewModels.count)")
+            print("cellViewModels after filter counter: \(cellViewModels.count)")
+            print("-----------------\n") */
         }
     }
         
@@ -145,7 +172,7 @@ extension RMCharsListViewViewModel: UICollectionViewDataSource {
     }
     
         
-    // Used for the activity indicator at the end of the collection view when Pagination is activated
+    // Used for the activity indicator at the end of the collection view (the footer) when Pagination is activated
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionFooter,
               let footer = collectionView.dequeueReusableSupplementaryView(
@@ -187,7 +214,9 @@ extension RMCharsListViewViewModel: UICollectionViewDelegateFlowLayout {
     
     // This is the area where the activity indicator will be displayed when the pagination is activated
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard shouldLoadMoreCharsAndShowIndicator else { return .zero }
+        guard shouldLoadMoreCharsAndShowIndicator else {
+            return .zero  // Hide the footer
+        }
         
         return CGSize(width: collectionView.frame.width, height: 100)
     }
@@ -206,6 +235,7 @@ extension RMCharsListViewViewModel: UIScrollViewDelegate {
             return
         }
         
+        // Used in the pagination to fetch more characters (if available)
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] time in
             guard let self else { return }
             

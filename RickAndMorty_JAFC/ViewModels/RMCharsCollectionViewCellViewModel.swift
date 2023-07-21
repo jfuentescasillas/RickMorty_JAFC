@@ -8,7 +8,15 @@
 
 import Foundation
 
-
+/*
+ * Hashable and Equatable are used to get rid of the duplicated elements after
+ * calling new characters in the pagination. To filter something that already
+ * exists. A character ViewModel is created and a unique hash is wanted; this
+ * is where Hashable is used (and its protocol stubs are implemented).
+ *
+ * This Hashable is related to the RMCharsListViewViewModel. See the commented
+ * section inside charsList variable
+ */
 final class RMCharsCollectionViewCellViewModel: Hashable, Equatable {
     // MARK: - Properties
     // MARK: Public Properties
@@ -50,6 +58,7 @@ final class RMCharsCollectionViewCellViewModel: Hashable, Equatable {
     }
     
     
+    // Whe tell the viewModel whenever it's created, what the unique hash value for it is.
     func hash(into hasher: inout Hasher) {
         hasher.combine(charImgURL)
         hasher.combine(charName)

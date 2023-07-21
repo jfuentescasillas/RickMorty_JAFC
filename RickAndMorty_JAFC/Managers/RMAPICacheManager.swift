@@ -8,7 +8,10 @@
 
 import Foundation
 
-
+/*
+ We want to instatiate a few caches based on each of the RMEndpoint's cases;
+ that's why RMEndpoint conforms to Hashable
+ */
 /// Manages in memory API Cached
 final class RMAPICacheManager {
     // MARK: - Properties
