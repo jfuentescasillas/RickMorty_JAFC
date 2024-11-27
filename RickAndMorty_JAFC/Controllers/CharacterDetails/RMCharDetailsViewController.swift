@@ -101,6 +101,7 @@ extension RMCharDetailsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let sectionType = viewModel.sections[indexPath.section]
+       
         switch sectionType {
         case .photo(let viewModel):
             guard let cell = collectionView.dequeueReusableCell(

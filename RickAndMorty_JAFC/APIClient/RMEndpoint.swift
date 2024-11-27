@@ -17,7 +17,7 @@ import Foundation
  method of the RMAPICacheManager class.
  */
 /// Unique API enpoint
-@frozen enum RMEndpoint: String, Hashable, CaseIterable {
+enum RMEndpoint: String, Hashable, CaseIterable {
     /// Endpoint to get character's info
     case character
     

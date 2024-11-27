@@ -26,13 +26,12 @@ final class RMImageLoaderManager {
     /// - Parameters:
     ///   - url: Image's source URL
     ///   - completion: callback with data or error
-    public func downloadImg(url: URL, completion: @escaping(Result<Data, Error>) -> Void) {
-        let key = url.absoluteString as NSString
+    public func downloadImg(url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+        let key = url.absoluteString // Use `String` directly
         
-        if let data = imgCache.object(forKey: key) {
-            // print("Image is cached already with key: \(key)")
+        if let data = imgCache.object(forKey: key as NSString) { // Cast `String` to `NSString` when accessing the cache
             completion(.success(data as Data))
-            
+           
             return
         }
         
@@ -43,10 +42,9 @@ final class RMImageLoaderManager {
                 
                 return
             }
-           
-            let value = data as NSData
-            self.imgCache.setObject(value, forKey: key)
             
+            let value = data as NSData
+            self.imgCache.setObject(value, forKey: key as NSString) // Cast `String` to `NSString` here as well
             completion(.success(data))
         }
         
